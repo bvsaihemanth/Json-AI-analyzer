@@ -1,0 +1,86 @@
+{
+  "hospital": {
+    "hospital_id": "HSP1001",
+    "name": "Apollo Care Hospital",
+    "city": "Hyderabad",
+
+    "patients": [
+
+      {
+        "patient_id": "PAT201",
+        "name": "Arjun Reddy",
+        "age": 45,
+        "gender": "Male",
+        "blood_group": "O+",
+        "phone": "9876543210",
+        "email": "arjun@gmail.com",
+        "address": "Madhapur, Hyderabad",
+
+        "diseases": [
+
+          {
+            "disease_id": "DIS001",
+            "disease_name": "Heart Disease",
+            "severity": "High",
+            "diagnosed_on": "2026-04-10",
+            "doctor": "Dr. Rajesh"
+          },
+
+          {
+            "disease_id": "DIS002",
+            "disease_name": "High BP",
+            "severity": "Medium",
+            "diagnosed_on": "2026-04-12",
+            "doctor": "Dr. Rajesh"
+          }
+        ],
+
+        "admissions": [
+
+          {
+            "admission_id": "ADM101",
+            "room_no": 301,
+            "admitted_on": "2026-04-10",
+            "discharged_on": "2026-04-18",
+            "bill_amount": 45000,
+            "payment_status": "Paid"
+          }
+        ]
+      },
+
+      {
+        "patient_id": "PAT202",
+        "name": "Sneha Sharma",
+        "age": 32,
+        "gender": "Female",
+        "blood_group": "A+",
+        "phone": "9123456780",
+        "email": "sneha@gmail.com",
+        "address": "Gachibowli, Hyderabad",
+
+        "diseases": [
+
+          {
+            "disease_id": "DIS003",
+            "disease_name": "Arrhythmia",
+            "severity": "Low",
+            "diagnosed_on": "2026-05-01",
+            "doctor": "Dr. Meena"
+          }
+        ],
+
+        "admissions": [
+
+          {
+            "admission_id": "ADM102",
+            "room_no": 305,
+            "admitted_on": "2026-05-01",
+            "discharged_on": "2026-05-05",
+            "bill_amount": 28000,
+            "payment_status": "Pending"
+          }
+        ]
+      }
+    ]
+  }
+}
