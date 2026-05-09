@@ -32,6 +32,18 @@ export const metadata = {
 
   description:
     "Dynamic Full Stack Application Generator",
+
+  icons: {
+
+    icon:
+      "/icon.svg",
+
+    shortcut:
+      "/icon.svg",
+
+    apple:
+      "/icon.svg",
+  },
 };
 
 export default function RootLayout({
