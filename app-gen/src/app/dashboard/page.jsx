@@ -16,6 +16,8 @@ import {
 
   Plus,
 
+  Trash2,
+
   X,
 
 } from "lucide-react";
@@ -105,6 +107,16 @@ function DashboardContent() {
   const [
     loading,
     setLoading,
+  ] = useState(false);
+
+  const [
+    deleteTarget,
+    setDeleteTarget,
+  ] = useState(null);
+
+  const [
+    deleting,
+    setDeleting,
   ] = useState(false);
 
   const [
@@ -248,6 +260,70 @@ function DashboardContent() {
     } finally {
 
       setLoading(false);
+    }
+  }
+
+  /*
+    DELETE PROJECT
+  */
+
+  async function deleteProject() {
+
+    if (!deleteTarget) {
+
+      return;
+    }
+
+    try {
+
+      setDeleting(true);
+
+      const response =
+        await fetch(
+          `/api/projects/${deleteTarget.id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+      const data =
+        await response.json();
+
+      if (
+        !response.ok ||
+        !data.success
+      ) {
+
+        alert(
+          data.message ||
+          "Project delete failed"
+        );
+
+        return;
+      }
+
+      setProjects(
+        (currentProjects) =>
+          currentProjects.filter(
+            (project) =>
+              project.id !==
+              deleteTarget.id
+          )
+      );
+
+      setDeleteTarget(null);
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert(
+        "Project delete failed"
+      );
+
+    } finally {
+
+      setDeleting(false);
     }
   }
 
@@ -482,17 +558,55 @@ function DashboardContent() {
 
                             <div
                               className="
-                                px-4
-                                py-2
-                                rounded-2xl
-                                bg-green-500/10
-                                border
-                                border-green-500/20
-                                text-green-400
-                                text-sm
+                                flex
+                                items-center
+                                gap-3
                               "
                             >
-                              Active
+
+                              <div
+                                className="
+                                  px-4
+                                  py-2
+                                  rounded-2xl
+                                  bg-green-500/10
+                                  border
+                                  border-green-500/20
+                                  text-green-400
+                                  text-sm
+                                "
+                              >
+                                Active
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={(event) => {
+
+                                  event.stopPropagation();
+                                  setDeleteTarget(
+                                    project
+                                  );
+                                }}
+                                className="
+                                  w-11
+                                  h-11
+                                  rounded-2xl
+                                  border
+                                  border-red-500/20
+                                  bg-red-500/10
+                                  text-red-300
+                                  flex
+                                  items-center
+                                  justify-center
+                                  hover:bg-red-500/20
+                                  transition
+                                "
+                                aria-label={`Delete ${project.name}`}
+                              >
+                                <Trash2 size={18} />
+                              </button>
+
                             </div>
 
                           </div>
@@ -783,6 +897,139 @@ function DashboardContent() {
                       : "Create Runtime Project"
                   }
 
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        )
+      }
+
+      {/* DELETE CONFIRM MODAL */}
+
+      {
+        deleteTarget && (
+
+          <div
+            className="
+              fixed
+              inset-0
+              bg-black/70
+              backdrop-blur-sm
+              flex
+              items-center
+              justify-center
+              z-50
+              px-4
+            "
+          >
+
+            <div
+              className="
+                w-full
+                max-w-md
+                rounded-3xl
+                border
+                border-white/10
+                bg-[#090909]
+                p-8
+                shadow-2xl
+              "
+            >
+
+              <div
+                className="
+                  w-14
+                  h-14
+                  rounded-2xl
+                  bg-red-500/10
+                  border
+                  border-red-500/20
+                  text-red-300
+                  flex
+                  items-center
+                  justify-center
+                "
+              >
+                <Trash2 size={24} />
+              </div>
+
+              <h2
+                className="
+                  text-2xl
+                  font-bold
+                  mt-6
+                "
+              >
+                Delete project?
+              </h2>
+
+              <p
+                className="
+                  text-zinc-500
+                  mt-3
+                  leading-relaxed
+                "
+              >
+                This will permanently delete
+                {` ${deleteTarget.name} `}
+                and its uploads/runtime data.
+              </p>
+
+              <div
+                className="
+                  mt-7
+                  flex
+                  justify-end
+                  gap-3
+                "
+              >
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setDeleteTarget(null)
+                  }
+                  disabled={deleting}
+                  className="
+                    h-12
+                    px-5
+                    rounded-2xl
+                    border
+                    border-white/10
+                    bg-white/5
+                    text-white
+                    hover:bg-white/10
+                    transition
+                    disabled:opacity-50
+                  "
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  onClick={deleteProject}
+                  disabled={deleting}
+                  className="
+                    h-12
+                    px-5
+                    rounded-2xl
+                    bg-red-500
+                    text-white
+                    font-semibold
+                    hover:bg-red-400
+                    transition
+                    disabled:opacity-50
+                  "
+                >
+                  {
+                    deleting
+                      ? "Deleting..."
+                      : "Delete"
+                  }
                 </button>
 
               </div>
