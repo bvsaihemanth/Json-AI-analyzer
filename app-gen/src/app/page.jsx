@@ -52,7 +52,7 @@ export default function HomePage() {
         "AI Runtime Engine",
 
       description:
-        "Transform arbitrary JSON into runtime database systems with live PostgreSQL population.",
+        "Transform arbitrary JSON into runtime database systems with live PostgreSQL.",
 
       icon: Cpu,
     },
